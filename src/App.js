@@ -20,6 +20,8 @@ import Box from '@mui/material/Box';
 import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
 import { styled } from '@mui/material/styles';
+import {createContext,useContext} from 'react';
+
 //MUI-for navBar component
 // import IconButton from '@mui/material/IconButton';
 // import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
@@ -29,16 +31,18 @@ import { styled } from '@mui/material/styles';
 // import IconButton from '@mui/material/IconButton';
 // import RemoveCircleOutlineIcon from '@mui/icons-material/RemoveCircleOutline';
 
+//MUI- for Movie List component
 
 
 
 //navbar component
 function NavBar({movies,adding}){
- 
+  const [theme, setTheme] = useContext(themeCtx);
   const history = useHistory();
   return(<div>
-  <AppBar position="static" sx={{background:"#0088f8",color:"gold"}}>
+  <AppBar className="appbar" position="static" sx={(theme)?{background:"gold",color:"black"}:{background:"#0088f8",color:"white"}}>
     <Toolbar>
+      <div>
       <Button color="inherit" variat="text" onClick={()=>history.push(`/`)} >
          <span className="animate__animated animate__bounceInLeft animate__slow	">Home</span>
       </Button>
@@ -48,12 +52,13 @@ function NavBar({movies,adding}){
       <Button color="inherit" variant="text" onClick={()=>history.push(`/addMovie`)} >
          <span className="animate__animated animate__bounceInLeft animate__slow	">Add Movies</span>
       </Button>
-      <Button color="inherit" variant="text" onClick={()=>history.push(`/films`)} >
-         <span className="animate__animated animate__bounceInLeft animate__slow	">Films</span>
-      </Button>
       <Button color="inherit" variant="text" onClick={()=>history.push(`/TicTacToe-Game`)} >
       <span className="animate__animated animate__bounceInLeft animate__slow ">TicTacToe Game</span> 
       </Button>
+      </div>
+      <div className="theming">
+      <button onClick={()=>setTheme(!theme)}>checking theme</button>
+      </div>
     </Toolbar>
   </AppBar>
      {/* <nav>
@@ -75,7 +80,7 @@ function NavBar({movies,adding}){
              <Home/>
          </Route>
          <Route exact path="/movies">
-            <Movies list={movies}/>
+            <Movies list={movies} deleting={adding}/>
          </Route>
          <Route exact path="/movies/:id">
             <MovieDetails list={movies}/>
@@ -83,11 +88,14 @@ function NavBar({movies,adding}){
          <Route exact path="/addMovie">
              <AddMovie list={movies} addingToList={adding}/>
          </Route>
-         <Route exact path="/films">
-              <Redirect to="/movies"/>
+         <Route exact path="/themes">
+              <Theming/>
          </Route>
          <Route exact path="/TicTacToe-Game">
                <TicTacToeGame/>
+         </Route>
+         <Route exact path="/Color-Game">
+               <ColorGame/>
          </Route>
          <Route path="**">
               <h1>404 thala!</h1>
@@ -99,28 +107,46 @@ function NavBar({movies,adding}){
 
 //home componenet
 function Home(){
+  const history = useHistory();
+  const [theme] = useContext(themeCtx);
+  const style=(theme)?"blackHome":"whiteHome";
   return(
-  <div className="home">
-    <div className="bgImage"></div>
-    <span className=" animate__animated animate__headShake animate__infinite	infinite"><b>Hii!!! , Guest</b></span>
-    <h1 className="animate__animated animate__lightSpeedInRight ">Looking for Movie App? (or) game app?</h1>
-    
+  <div className={style}>
+    <span className=" animate__animated animate__headShake animate__infinite	infinite"><b>Hiii , Guest!!!</b></span>
+    <div className="animate__animated animate__lightSpeedInRight ">
+    <h1 >What are you Looking for???</h1><button onClick={()=>history.push(`/movies`)}>Movies?</button> (or) <button onClick={()=>history.push(`/TicTacToe-Game`)}>game?</button>
+    </div>
   </div>)
 }
 
-//movies component
-function Movies({list}){
+function Theming(){
+  const [theme] = useContext(themeCtx);
   return(
-    <div className="overallMovieDiv">
-       {list.map(({name,image,rating,summary},index)=><EachMovie key={index} id={index} name={name} image={image} rating={rating} summary={summary} />)}
+    <div>
+        
+        {(theme)?<img src="https://wallpapercave.com/wp/Om3yOQJ.jpg" alt=""></img>:<img src="https://www.pixelstalk.net/wp-content/uploads/2016/09/Hi-Resolution-All-White.jpeg" alt=""></img>}
+    </div>
+  )
+}
+
+//movies component
+function Movies({list,deleting}){
+  const DeleteItem=(index)=>{
+     const listAfterDelete =  list.filter((movie,id)=>(id!==index));
+     deleting([...listAfterDelete]);
+      console.log("moviedeleted");
+  }
+  const [theme] = useContext(themeCtx);
+  const style = (theme)?"overallBlack":"overallWhite";
+  return(
+    <div className={style}>
+       {list.map(({name,image,rating,summary},index)=><EachMovie key={index} id={index} name={name} image={image} rating={rating} summary={summary} delFunc = {DeleteItem}/>)}
     </div>
   );
 }
 
-function EachMovie({id,name,image,rating,summary}){
+function EachMovie({id,name,image,rating,summary,delFunc}){
   const history = useHistory();
-  const [remove,setRemove] = useState(false);
-  const styles = {display: remove ? "none" : "block"};
   const [show,showing]= useState(false);
 
   const[likes,liking]=useState(Math.random().toFixed(1)*10);
@@ -130,15 +156,15 @@ function EachMovie({id,name,image,rating,summary}){
   const style=(check==="green")?{background:"green",color:"white"} : (check==="yellow")? {background:"yellow",color:"black"} :  {background:"red",color:"white"} ;
   const check1=(rating>=8.5)?"😀" : (rating>=4.5)? "🙂": "😒" ;
   return(
-  <div className="card" style={styles}>
+  <div className="card">
        <img src={image} alt={name}></img>
    <div className="nameAndRAndD">
      <div className="nameAndR">
          <h1>{name}</h1>
          <p className="rating">{check1}<span style={style}>{rating}</span></p>
      </div>
-    <IconButton className="delete" aria-label="delete" size="large" onClick={()=>setRemove(!remove)}>
-         <DeleteTwoToneIcon sx={{color:"gold"}} />
+    <IconButton className="delete"  aria-label="delete" size="large" onClick={()=>delFunc(id)}>
+         <DeleteTwoToneIcon className="deleteColor" sx={{color:"red"}} />
     </IconButton>
   </div>
 
@@ -146,7 +172,7 @@ function EachMovie({id,name,image,rating,summary}){
     <Button className="spoiler" onClick={()=>{showing(!show);}} variant="contained" sx={{color:"#0088f8",background:"gold"}}>Spoiler?👀</Button>
     <IconButton className="info" onClick={()=>{history.push(`/movies/${id}`)}} sx={{color:"gold"}}><InfoIcon/></IconButton>
     </div>
-      {show ?<p className="summary"><b style={{color:"white"}}>Summary - </b>{summary}</p>: ""}
+      {show ?<p className="summary"><b>Summary - </b>{summary}</p>: ""}
    
       <div className="Likes">
     <Button variant="contained" onClick={()=>liking(likes+1)}>👍{likes}</Button>
@@ -222,21 +248,22 @@ function AddMovie({list,addingToList}){
     </div>);
 }
 
-
-
-
 //movieDetai component
 function MovieDetails({list}){
   let {id}=useParams();
   let movieViewed = list[id];
+  const [theme] = useContext(themeCtx);
+  const style = (theme)?"overallBlack":"overallWhite";
   return(
+    <div className={style}>
   <div className="movieDetail">
     <div className="movieDetails">
-    <iframe width="640" height="360" src={movieViewed.trailer} title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    <iframe width="640" height="360" src={movieViewed.trailer} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
     <h1>{movieViewed.name}</h1>
     <h2><b>IMDB-</b>{movieViewed.rating}⭐</h2>
     <p><b>Summary-</b>{movieViewed.summary}</p>
     </div>
+  </div>
   </div>);
 }
 
@@ -245,7 +272,9 @@ function TicTacToeGame(){
    const initialValue = [null, null, null, null, null, null,null, null, null];
    const [gameBoard,setGameBoard] = useState(initialValue);
    const [turn,changeTurn] = useState("");
-   const { width, height } = useWindowSize()
+   const { width, height } = useWindowSize();
+   const [theme] = useContext(themeCtx);
+   const style1 = (theme)?"overallBlackGame":"overallWhiteGame";
 
    const change=(index)=>{
      if( !winner  && !gameBoard[index] && turn!==""){
@@ -278,9 +307,9 @@ function TicTacToeGame(){
     const style = {display:(hide)?"none":"block"};
 
    return(
-    <div>
+    <div className={style1} >
       <div>
-      <h1 style={{color:"white",textAlign:"center"}}><b className="childHood">Lets Bring BACK the CHILDHOOD!!!</b></h1> 
+      <h1 style={{textAlign:"center"}}><b className="childHood">Lets Bring BACK the CHILDHOOD!!!</b></h1> 
       </div>
        <div  style={style}>
          <div className="selecting-portion">
@@ -315,6 +344,30 @@ return(
 )
 }
 
+//ColorGame -  component
+function ColorGame(){
+  const[colorList,addColor]=useState(["green","blue","gold","red"]);
+    const[color,setColor]=useState("orange");
+    const [theme, setTheme] = useContext(themeCtx);
+  const style={background:(theme)?"black":"white",color:(theme)?"white":"black"};
+  return(
+    <div style={style}>
+       <input  style={{background:color}} placeholder="enter the value" onChange={(event)=>setColor(event.target.value)} value={color}/>
+       <button onClick={()=>addColor([...colorList,color])}>Add Color</button>
+       {colorList.map((color,index)=><Color key={index} value={color}/>)}
+    </div>
+  );
+}
+
+function Color({value}){
+      return(
+        <div style={{width:"10rem",height:"10rem",background:(value)}}>
+        </div>
+      )
+}
+
+const themeCtx = createContext(null);
+
 function App() {
 
   const movies =
@@ -341,10 +394,16 @@ function App() {
  ];
 
  const [list,addingToList]=useState(movies);
+
+ const [theme, setTheme] = useState(false);
+
+
   return (
+    <themeCtx.Provider value={[theme, setTheme]}>
     <div className="App">
        <NavBar movies={list} adding={addingToList}/>
     </div>
+    </themeCtx.Provider>
   );
 }
 

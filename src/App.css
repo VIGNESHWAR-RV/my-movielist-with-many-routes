@@ -42,69 +42,171 @@
   
     animation: bounce; /* referring directly to the animation's @keyframe declaration */
    /* animation-duration: 2s; */
-body{
-   background:url("https://th.bing.com/th/id/R.ad8db0c1030aa12d9132a23795e61854?rik=uv727TDmALuuIg&riu=http%3a%2f%2fwww.wallpaperbetter.com%2fwallpaper%2f694%2f707%2f772%2fwall-e-robot-night-stars-sky-animated-cartoon-1080P-wallpaper.jpg&ehk=%2fF4G6pL4CnCrJ4LOdUV%2bPzv5fmqukTPNHX2%2bsnSoPcQ%3d&risl=&pid=ImgRaw&r=0");
-   background-position: center center;
-   background-repeat: no-repeat;
-    background-attachment: fixed;
-    background-size: cover;
-  }
+
+
+  /* AppBar */
+
+.appbar{
+  display:flex;
+  justify-content:space-around;
+}
+.css-1t29gy6-MuiToolbar-root {
+  justify-content:space-between;
+}
+
+.theming>button{
+  margin-right: 2rem;
+}
+
 
 /* Home */
 
-.home{
+
+.blackHome,.whiteHome{
   display: grid;
-  padding-top:6rem;
-  place-items: center;
-  font-size:2rem;
+  padding:4rem;
+  padding-left: 2rem;
+  font-size:1rem;
+  background:url("./wallE-daysAndNights/set3-day.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height:calc(100vh - 192px);
+}
+.blackHome{
+  background:url("./wallE-daysAndNights/set3-night.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+.blackHome>div{
  
-}
-.home>h1{
+  margin-top:-25rem;
   color:transparent;
   background:linear-gradient(to right,gold,#0088f8);
   background-clip: content;
   -webkit-background-clip:text;
 }
-.home>span{
+.whiteHome>div{
+  margin-top:-25rem;
   color:transparent;
-  background:linear-gradient(to right,gold,#0088f8);
+  background:linear-gradient(to left,gold,#0088f8);
   background-clip: content;
   -webkit-background-clip:text;
-  font-size:4rem;
 }
+.blackHome>span{
+  color:transparent;
+  background:linear-gradient(to right,gold,#008cff);
+  background-clip: content;
+  -webkit-background-clip:text;
+  font-size:3rem;
+}
+.whiteHome>span{
+  color:transparent;
+  background:linear-gradient(to left,gold,#008cff);
+  background-clip: content;
+  -webkit-background-clip:text;
+  font-size:3rem;
+}
+.blackHome>div>button{
+  margin: 0.8rem;
+  padding:1rem;
+  border-radius: 15px;
+  border:2px solid white;
+  background-color:yellow;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.whiteHome>div>button{
+  margin: 0.8rem;
+  padding:1rem;
+  border-radius: 15px;
+  border:2px solid black;
+  background-color:#008cff;
+  color: white;
+  font-size: 2rem;
+  cursor: pointer;
+}
+.whiteHome>div>button:hover,.blackHome>div>button:hover{
+  transform: scale(1.15);
+  transition: 0.3s ease-in-out;
+}
+
 
 /* Movies */
 
-.overallMovieDiv{
+.overallBlack{
   display: grid;
   grid-template-columns: repeat(auto-fit,minmax(20rem,22rem));
   gap:2rem;
   padding:5rem;
   place-content: center;
+  background-image: url(./wallE-daysAndNights/set1-night.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
 }
-.card{
-  background: rgba(0, 145, 255, 0.288);
+.overallWhite{
+  display: grid;
+  grid-template-columns: repeat(auto-fit,minmax(20rem,22rem));
+  gap:2rem;
+  padding:5rem;
+  place-content: center;
+  background-image: url(./wallE-daysAndNights/set1-day.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+}
+.overallWhite>.card{
+  background: hsla(206, 100%, 50%, 0.548);
   border-radius: 25px;
   padding:8px;
   overflow: hidden;
+  border:5px solid hsl(206, 100%, 50%);
+}
+.overallBlack>.card{
+  background: rgba(255, 217, 0, 0.39);
+  border-radius: 25px;
+  padding:8px;
+  overflow: hidden;
+  border:5px solid gold;
 }
 
-.card>img{
+.overallWhite>.card>img{
   width:100%;
   height:12rem;
   border-radius:25px;
   object-fit: cover;
+  border:3px solid hsl(206, 100%, 50%);
+}
+.overallBlack>.card>img{
+  width:100%;
+  height:12rem;
+  border-radius:25px;
+  object-fit: cover;
+  border:3px solid rgba(255, 217, 0, 0.39);
 }
 .card>img:hover{
   transform: scale(1.15);
   transition: 0.3s ease-in-out;
 }
-.nameAndR{
+.overallWhite>.card>.nameAndRAndD>.nameAndR{
   display:flex;
   justify-content:flex-start;
   padding:5px;
   align-items:center;
-  color:gold;
+  color:white;
+}
+.overallBlack>.card>.nameAndRAndD>.nameAndR{
+  display:flex;
+  justify-content:flex-start;
+  padding:5px;
+  align-items:center;
+  color:black;
 }
 .rating{
   padding-left: 8px;
@@ -120,13 +222,42 @@ body{
   padding-left:5px;
   align-items:center;
 }
-.spoiler:hover{
+.overallWhite>.card>.buttons>.spoiler{
+  background-color:#008cff;
+  color: white;
+}
+.overallBlack>.card>.buttons>.spoiler{
+  background-color:gold;
+  color: black;
+}
+.overallWhite>.card>.buttons>.spoiler:hover{
   color:gold;
   transform: scale(1.15);
   transition: 0.2s ease-in-out;
 }
-.summary{
-  color:gold;
+.overallBlack>.card>.buttons>.spoiler:hover{
+  color:#008cff;
+  transform: scale(1.15);
+  transition: 0.2s ease-in-out;
+}
+.overallBlack>.card>.buttons>.info{
+  color: black;
+}
+.overallWhite>.card>.buttons>.info{
+  color: white;
+}
+.overallWhite>.card>.summary{
+  color:white;
+  padding-left: 6px;
+}
+.overallWhite>.card>.summary>b{
+  color:black;
+}
+.overallBlack>.card>.summary>b{
+  color:white;
+}
+.overallBlack>.card>.summary{
+  color:black;
   padding-left: 6px;
 }
 .Likes{
@@ -147,39 +278,86 @@ body{
 
 
 /* Movie Details */
-
-.movieDetail{
+.overallWhite>.movieDetail,.overallBlack>.movieDetail{
   display:grid;
   place-content: center;
   place-items: center;
 }
-.movieDetails>iframe{
+.overallBlack>.movieDetail>.movieDetails>iframe{
+  border:4px solid gold;
+  border-radius:25px;
+}
+.overallWhite>.movieDetail>.movieDetails>iframe{
   border:4px solid #008cff;
   border-radius:25px;
 }
-.movieDetails{
+
+.overallBlack>.movieDetail>.movieDetails{
   padding:4rem;
   margin:6rem;
-  background-color:rgba(0, 145, 255, 0.288);
-  border:4px solid #008cff;
+  background-color:rgba(255, 217, 0, 0.473);
+  border:4px solid  gold;
   border-radius:25px;
 }
-.movieDetails>h1,h2,p{
-  color:gold;
+.overallWhite>.movieDetail>.movieDetails{
+  padding:4rem;
+  margin:6rem;
+  background-color:#008cff7e;
+  border:4px solid  #008cff;
+  border-radius:25px;
 }
-.movieDetails>p>b,.movieDetails>h2>b{
+.overallWhite>.movieDetail>.movieDetails>h2,p{
   color:white;
+}
+.overallBlack>.movieDetail>.movieDetails>h2,p{
+  color:black;
+}
+.overallWhite>.movieDetail>.movieDetails>p{
+  color:white;
+}
+.overallWhite>.movieDetail>.movieDetails>p>b,
+.overallWhite>.movieDetail>.movieDetails>h2>b,
+.overallWhite>.movieDetail>.movieDetails>h1{
+  color: black;
+}
+.overallBlack>.movieDetail>.movieDetails>p>b,
+.overallBlack>.movieDetail>.movieDetails>h2>b,
+.overallBlack>.movieDetail>.movieDetails>h1{
+  color: white;
 }
 
 /* TicTacToe-Game */
 
-.childHood{
+.overallBlackGame{
+  background:url("./wallE-daysAndNights/set2-night.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height:calc(100vh - 68px);
+  margin-top:-1.25rem;
+}
+.overallWhiteGame{
+  background:url("./wallE-daysAndNights/set2-day.jpg");
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height:calc(100vh - 68px);
+  margin-top:-1.25rem;
+}
+.overallBlackGame>div>h1>.childHood{
   color:transparent;
-  background:linear-gradient(to top,gold 40%,#0088f8 50%);
+  background:gold;
   background-clip: text;
   -webkit-background-clip:text;
 }
-
+.overallWhiteGame>div>h1>.childHood{
+  color:transparent;
+  background:#0088f8;
+  background-clip: text;
+  -webkit-background-clip:text;
+}
 .selecting-portion{
   display:grid;
   place-items: center;
@@ -188,6 +366,12 @@ body{
   background-clip: text;
   -webkit-background-clip:text;
   color:transparent;
+}
+.overallBlackGame>div>.selecting-portion{
+  text-shadow: 1px 1px 45px gold;
+}
+.overallWhiteGame>div>.selecting-portion{
+  text-shadow: 1px 1px 45px #0088f8;
 }
 .selecting-portion>div>button{
   width:6rem;
@@ -198,14 +382,26 @@ body{
   background: transparent;
   
 }
-.selecting-portion>div>button:hover{
+
+.overallWhiteGame>div>.selecting-portion>div>button:hover{
   transition: all 0.4s ease-in-out;
   transform:scale(1.4);
-  text-shadow: 2px 2px 3px #ffffff63,-2px -2px 3px #ffffff5d;
+  text-shadow: 1px 1px 30px #0088f8;
 }
-.indicators{
+.overallBlackGame>div>.selecting-portion>div>button:hover{
+  transition: all 0.4s ease-in-out;
+  transform:scale(1.4);
+  text-shadow: 1px 1px 30px gold;
+}
+.overallBlackGame>.indicators{
   text-align:center;
   font-size:4rem;
+  text-shadow: 1px 1px 30px gold;
+}
+.overallWhiteGame>.indicators{
+  text-align:center;
+  font-size:4rem;
+  text-shadow: 1px 1px 30px #0088f8;
 }
 
 .tictactoe-gameBox{
@@ -231,24 +427,43 @@ body{
 .game-buttons:hover{
     background-color:hsla(0, 0%, 50%, 0.514);
 }
-.resultAndReset{
+.overallWhiteGame>.overallWinner>.resultAndReset{
   display:grid;
   grid-template-columns:1.2fr 1fr;
   justify-items: end;
   align-items: center;
-  color:white;
+  color:#0088f8;
   font-size:1.5rem;
 }
-.resultAndReset>button{
-  border:2px solid white;
+.overallBlackGame>.overallWinner>.resultAndReset{
+  display:grid;
+  grid-template-columns:1.2fr 1fr;
+  justify-items: end;
+  align-items: center;
+  color:gold;
+  font-size:1.5rem;
+}
+
+.overallWhiteGame>.overallWinner>.resultAndReset>button{
+  border:2px solid #0088f8;
   border-radius:25px;
-  background:linear-gradient(to left,gold 44%,#0088f8 50%);
-  background-clip: text;
-  -webkit-background-clip:text;
-  color:transparent;
+  color:#0088f8;
   font-size:1.1rem;
   cursor:pointer;
-
+  display: inline-block;
+  margin: 0 0.5rem;
+  animation: wobble; 
+  animation-duration: 1.5s;
+  animation-delay: 1.5s;
+  animation-iteration-count: 6;
+}
+.overallBlackGame>.overallWinner>.resultAndReset>button{
+  border:2px solid gold;
+  border-radius:25px;
+  color:gold;
+  background:transparent;
+  font-size:1.1rem;
+  cursor:pointer;
   display: inline-block;
   margin: 0 0.5rem;
   animation: wobble; 
