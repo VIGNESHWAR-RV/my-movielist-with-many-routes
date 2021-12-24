@@ -1,9 +1,11 @@
 
 import './App.css';
 //for hooks
-import {useState} from 'react';
+import {useState , useEffect} from 'react';
 //for router
 import {Route,Link,Switch,Redirect,useHistory,useParams} from 'react-router-dom';
+//for-context
+import {createContext,useContext} from 'react';
 
 //for-animation
 import 'animate.css';
@@ -17,14 +19,14 @@ import useWindowSize from 'react-use/lib/useWindowSize'
 import Confetti from 'react-confetti'
 import DeleteTwoToneIcon from '@mui/icons-material/DeleteTwoTone';
 import Box from '@mui/material/Box';
-import FormControl from '@mui/material/FormControl';
 import TextField from '@mui/material/TextField';
-import { styled } from '@mui/material/styles';
-import {createContext,useContext} from 'react';
-
+import Brightness7SharpIcon from '@mui/icons-material/Brightness7Sharp';
+import Brightness4SharpIcon from '@mui/icons-material/Brightness4Sharp';
+import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
+import Badge from '@mui/material/Badge';
+import ThumbDownOffAltTwoToneIcon from '@mui/icons-material/ThumbDownOffAltTwoTone';
 //MUI-for navBar component
 // import IconButton from '@mui/material/IconButton';
-// import MenuTwoToneIcon from '@mui/icons-material/MenuTwoTone';
 
 //MUI-for EachMovie component
 // import InfoIcon from '@mui/icons-material/Info';
@@ -35,29 +37,35 @@ import {createContext,useContext} from 'react';
 
 
 
+const themeCtx = createContext(null);
+
 //navbar component
 function NavBar({movies,adding}){
   const [theme, setTheme] = useContext(themeCtx);
+  const themeName  = (theme)?"lightMode":"darkMode"
   const history = useHistory();
   return(<div>
-  <AppBar className="appbar" position="static" sx={(theme)?{background:"gold",color:"black"}:{background:"#0088f8",color:"white"}}>
-    <Toolbar>
-      <div>
-      <Button color="inherit" variat="text" onClick={()=>history.push(`/`)} >
+    <AppBar position="static" sx={(theme)?{background:"gold",color:"black"}:{background:"#0088f8",color:"white"}}>
+    <Toolbar className={themeName}>
+   
+      <div className="buttonsDiv">
+      <Button className="navButtons" color="inherit" variat="text" onClick={()=>history.push(`/`)} >
          <span className="animate__animated animate__bounceInLeft animate__slow	">Home</span>
       </Button>
-      <Button color="inherit" variant="text" onClick={()=>history.push(`/movies`)} >
+      <Button className="navButtons"color="inherit" variant="text" onClick={()=>history.push(`/movies`)} >
          <span className="animate__animated animate__bounceInLeft animate__slow	">Movies</span> 
       </Button>
-      <Button color="inherit" variant="text" onClick={()=>history.push(`/addMovie`)} >
+      <Button className="navButtons" color="inherit" variant="text" onClick={()=>history.push(`/addMovie`)} >
          <span className="animate__animated animate__bounceInLeft animate__slow	">Add Movies</span>
       </Button>
-      <Button color="inherit" variant="text" onClick={()=>history.push(`/TicTacToe-Game`)} >
+      <Button className="navButtons" color="inherit" variant="text" onClick={()=>history.push(`/TicTacToe-Game`)} >
       <span className="animate__animated animate__bounceInLeft animate__slow ">TicTacToe Game</span> 
       </Button>
       </div>
-      <div className="theming">
-      <button onClick={()=>setTheme(!theme)}>checking theme</button>
+      <div className="themeSwitch">
+      {(theme)
+         ?<button className="animate__animated animate__bounceInRight animate__slow" onClick={()=>setTheme(!theme)}><Brightness7SharpIcon/></button>
+         :<button className="animate__animated animate__bounceInRight animate__slow" onClick={()=>setTheme(!theme)}><Brightness4SharpIcon/></button>}
       </div>
     </Toolbar>
   </AppBar>
@@ -131,21 +139,24 @@ function Theming(){
 
 //movies component
 function Movies({list,deleting}){
-  const DeleteItem=(index)=>{
-     const listAfterDelete =  list.filter((movie,id)=>(id!==index));
-     deleting([...listAfterDelete]);
-      console.log("moviedeleted");
+  const DeleteItem=(id,indexValue)=>{
+    //  const listAfterDelete =  list.filter((movie,id)=>(id!==index));
+    //  deleting([...listAfterDelete]);
+    //   console.log("moviedeleted");
+     const deletedList = list.filter((movie,index)=>(index!==indexValue));
+     deleting(deletedList);
+     fetch(`https://61c412daf1af4a0017d99281.mockapi.io/movies/${id}`,{method:'DELETE'});
   }
   const [theme] = useContext(themeCtx);
   const style = (theme)?"overallBlack":"overallWhite";
   return(
     <div className={style}>
-       {list.map(({name,image,rating,summary},index)=><EachMovie key={index} id={index} name={name} image={image} rating={rating} summary={summary} delFunc = {DeleteItem}/>)}
+       {list.map(({id,name,image,rating,summary},index)=><EachMovie key={index} position={index} id={id} name={name} image={image} rating={rating} summary={summary} delFunc = {DeleteItem}/>)}
     </div>
   );
 }
 
-function EachMovie({id,name,image,rating,summary,delFunc}){
+function EachMovie({id,name,image,rating,summary,delFunc,position}){
   const history = useHistory();
   const [show,showing]= useState(false);
 
@@ -163,20 +174,24 @@ function EachMovie({id,name,image,rating,summary,delFunc}){
          <h1>{name}</h1>
          <p className="rating">{check1}<span style={style}>{rating}</span></p>
      </div>
-    <IconButton className="delete"  aria-label="delete" size="large" onClick={()=>delFunc(id)}>
+    <IconButton className="delete"  aria-label="delete" size="large" onClick={()=>delFunc(id,position)}>
          <DeleteTwoToneIcon className="deleteColor" sx={{color:"red"}} />
     </IconButton>
   </div>
 
     <div className="buttons">
     <Button className="spoiler" onClick={()=>{showing(!show);}} variant="contained" sx={{color:"#0088f8",background:"gold"}}>Spoiler?👀</Button>
-    <IconButton className="info" onClick={()=>{history.push(`/movies/${id}`)}} sx={{color:"gold"}}><InfoIcon/></IconButton>
+    <IconButton className="info" onClick={()=>{history.push(`/movies/${position}`)}} sx={{color:"gold"}}><InfoIcon/></IconButton>
     </div>
       {show ?<p className="summary"><b>Summary - </b>{summary}</p>: ""}
    
-      <div className="Likes">
-    <Button variant="contained" onClick={()=>liking(likes+1)}>👍{likes}</Button>
-    <Button variant="contained" color="error" onClick={()=>disliking(disLikes+1)}>👎{disLikes}</Button>
+    <div className="Likes">
+       <Badge className="button" badgeContent={likes} color="primary">
+       <ThumbUpTwoToneIcon className="like" onClick={()=>liking(likes+1)}/>
+       </Badge>
+       <Badge className="button" badgeContent={disLikes}  size="larger" color="error">
+       <ThumbDownOffAltTwoToneIcon className="disLike" onClick={()=>disliking(disLikes+1)}/>
+       </Badge>
     </div>
   </div>);
 }
@@ -184,80 +199,49 @@ function EachMovie({id,name,image,rating,summary,delFunc}){
 //addMovie component
 function AddMovie({list,addingToList}){
    const history = useHistory();
-   const[name,naming]=useState("Name");
-   const[image,imaging] = useState("ThumbNail");
-   const[rating,rate]=useState("Rating");
-   const[summary,story]=useState("Summary");
-
-   const ValidationTextField = styled(TextField)({
-    '& input:valid + fieldset': {
-      borderColor: 'white',
-      borderWidth: 2,
-    },
-    '& input:invalid + fieldset': {
-      borderColor: '#0088f8',
-      borderWidth: 2,
-    },
-    '& input:valid:focus + fieldset': {
-      borderLeftWidth: 6,
-      padding: '4px !important', // override inline-style
-    },
-  });
-  
-   function CustomizedInputs({value,onChange}) {
-    return (
-     
-        
-        <ValidationTextField
-          className="form-control"
-          label={value}
-          required
-          variant="outlined"
-          onChange={onChange}
-          id="validation-outlined-input"
-        />
-    );
+   const[name,naming]=useState("");
+   const[image,imaging] = useState("");
+   const[rating,rate]=useState("");
+   const[summary,story]=useState("");
+   const [theme] = useContext(themeCtx);
+   const style = (theme)?"blackAdd":"whiteAdd";
+  const adding=()=>{
+    const newMovie={name,image,rating,summary};
+    addingToList([...list,newMovie]);
+    history.push("/movies");
   }
 
    return(
-    <div>
+    <div className={style}>
     <div className="addMovie">
-      <Box component="form" noValidate sx={{ display: 'grid', gridTemplateColumns:"1fr", gap: 0.5, padding:"0.5rem" }}>   
-        <h3 style={{color:"#0088f8"}}>Add your Favourite Movie too!!!</h3>
-        <FormControl variant="standard">
-        </FormControl>
-        <CustomizedInputs value={name} onChange={(event)=>{naming(event.target.value);}}/>
-    
-        <FormControl variant="standard">
-        </FormControl>
-        <CustomizedInputs value={image} onChange={(event)=>{imaging(event.target.value);}}/>
+      <Box className="box" component="form" sx={{display: 'grid', gridTemplateColumns:"1fr", gap: 0.5, padding:"0.5rem"}} noValidate autoComplete="off">  
+        <h3 className="head">Add your Favourite Movie too!!!</h3>
        
-        <FormControl variant="standard">
-        </FormControl>
-        <CustomizedInputs value={rating} onChange={(event)=>{rate(event.target.value);}}/>
-    
-        <FormControl variant="standard">
-        </FormControl>
-        <CustomizedInputs value={summary} onChange={(event)=>{story(event.target.value);}}/>
-    
-       <Button onClick={()=> {const newMovie={name,image,rating,summary};(name!=="Name" && image!=="ThumbNail" && rating!=="Rating" && summary!=="Summary" )?(addingToList([...list,newMovie])):alert("enter the details to add");(name!=="Name" && image!=="ThumbNail" && rating!=="Rating" && summary!=="Summary" )?history.push("/movies"):alert("Enter the details to add");}} variant="contained"   >Add Movie</Button>
-       <Button variant="contained" color="error" onClick={()=>{addingToList([...list]); history.push("/movies");}}>Cancel</Button>
-       
+        <TextField helperText="Please enter movie name" color="error" margin="dense" className="inputs" id="standard-basic" label="Name" variant="standard"  onChange={(event)=>{naming(event.target.value);}}/>
+
+        <TextField helperText="Please enter the image link" color="error" margin="dense" className="inputs" id="standard-basic" label="ThumbNail" variant="standard" onChange={(event)=>{imaging(event.target.value);}}/>
+
+        <TextField helperText="Please enter the rating out of 10" color="error" margin="dense" className="inputs" id="standard-basic" label="Rating" variant="standard"  onChange={(event)=>{rate(event.target.value);}}/>
+
+        <TextField helperText="Please add a short story about the movie (max: 20 words*)" color="error" margin="dense" className="inputs" id="standard-basic" label="Summary" variant="standard"  onChange={(event)=>{story(event.target.value);}}/>
+
+       <Button className="button" onClick={()=> {(name!=="" && image!=="" && rating!=="" && summary!=="" )?adding():alert("enter the details to add");}} variant="contained">Add Movie</Button>
+       <Button className="cancelButton" variant="contained" color="error" onClick={()=>{addingToList([...list]); history.push("/movies");}}>Cancel</Button>
      </Box>
     </div>
-    </div>);
+  </div>);
 }
 
 //movieDetai component
 function MovieDetails({list}){
-  let {id}=useParams();
-  let movieViewed = list[id];
+  const {id}=useParams();
+  const movieViewed = list[id];
   const [theme] = useContext(themeCtx);
   const style = (theme)?"overallBlack":"overallWhite";
   return(
     <div className={style}>
-  <div className="movieDetail">
-    <div className="movieDetails">
+      <div className="movieDetail">
+        <div className="movieDetails">
     <iframe width="640" height="360" src={movieViewed.trailer} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
     <h1>{movieViewed.name}</h1>
     <h2><b>IMDB-</b>{movieViewed.rating}⭐</h2>
@@ -348,7 +332,7 @@ return(
 function ColorGame(){
   const[colorList,addColor]=useState(["green","blue","gold","red"]);
     const[color,setColor]=useState("orange");
-    const [theme, setTheme] = useContext(themeCtx);
+    const [theme] = useContext(themeCtx);
   const style={background:(theme)?"black":"white",color:(theme)?"white":"black"};
   return(
     <div style={style}>
@@ -366,34 +350,39 @@ function Color({value}){
       )
 }
 
-const themeCtx = createContext(null);
-
 function App() {
 
-  const movies =
- [{name:"RRR",trailer:"https://www.youtube.com/embed/NgBoMJy386M",
- image:"https://www.filmibeat.com/ph-big/2021/12/rrr_163903031450.jpg",
- rating:9,
- summary:"A fictitious story about two legendary revolutionaries and their journey away from home before they started fighting for their country in 1920's."},
- {name:"Bahubhali-2",trailer:"https://www.youtube.com/embed/G62HrubdD6o",
- image:"https://wallpapercave.com/dwp2x/wp4027395.jpg",
- rating:8.5,
- summary:"When Shiva, the son of Bahubali, learns about his heritage, he begins to look for answers. His story is juxtaposed with past events that unfolded in the Mahishmati Kingdom."},
- {name:"Bahubhali-1",trailer:"https://www.youtube.com/embed/sOEg_YZQsTI",
- image:"https://wallpapercave.com/dwp2x/wp1851939.jpg",
- rating:8,
- summary:"In ancient India, an adventurous and daring man becomes involved in a decades-old feud between two warring peoples."},
- {name:"Naan-E",trailer:"https://www.youtube.com/embed/q4h_e3RO_Ck",
- image:"https://wallpapercave.com/wp/wp7489196.jpg",
- rating:7,
- summary:"Since the head of a housefly is made up almost entirely of eye and very little muscle, conveying emotion as the fly was extremely difficult."},
- {name:"Maveeran",trailer:"https://www.youtube.com/embed/f6g2TLmiG8Q",
- image:"http://i.indiglamour.com/photogallery/tamil/movies/2011/may10/Maaveeran/wide/Maaveeran_5715.jpg",
- rating:4,
- summary:"A warrior gets reincarnated 400 years later, after trying to save the princess and the kingdom, who also dies along with him. He then sets back again to fight against all odds and win back his love."},
- ];
+//   const movies =
+//  [{id:"100",name:"RRR",trailer:"https://www.youtube.com/embed/NgBoMJy386M",
+//  image:"https://www.filmibeat.com/ph-big/2021/12/rrr_163903031450.jpg",
+//  rating:9,
+//  summary:"A fictitious story about two legendary revolutionaries and their journey away from home before they started fighting for their country in 1920's."},
+//  {id:"101",name:"Bahubhali-2",trailer:"https://www.youtube.com/embed/G62HrubdD6o",
+//  image:"https://wallpapercave.com/dwp2x/wp4027395.jpg",
+//  rating:8.5,
+//  summary:"When Shiva, the son of Bahubali, learns about his heritage, he begins to look for answers. His story is juxtaposed with past events that unfolded in the Mahishmati Kingdom."},
+//  {id:"102",name:"Bahubhali-1",trailer:"https://www.youtube.com/embed/sOEg_YZQsTI",
+//  image:"https://wallpapercave.com/dwp2x/wp1851939.jpg",
+//  rating:8,
+//  summary:"In ancient India, an adventurous and daring man becomes involved in a decades-old feud between two warring peoples."},
+//  {id:"103",name:"Naan-E",trailer:"https://www.youtube.com/embed/q4h_e3RO_Ck",
+//  image:"https://wallpapercave.com/wp/wp7489196.jpg",
+//  rating:7,
+//  summary:"Since the head of a housefly is made up almost entirely of eye and very little muscle, conveying emotion as the fly was extremely difficult."},
+//  {id:"104",name:"Maveeran",trailer:"https://www.youtube.com/embed/f6g2TLmiG8Q",
+//  image:"http://i.indiglamour.com/photogallery/tamil/movies/2011/may10/Maaveeran/wide/Maaveeran_5715.jpg",
+//  rating:4,
+//  summary:"A warrior gets reincarnated 400 years later, after trying to save the princess and the kingdom, who also dies along with him. He then sets back again to fight against all odds and win back his love."},
+//  ];
 
- const [list,addingToList]=useState(movies);
+ const [list,addingToList]=useState([]);
+useEffect(()=>{
+    fetch("https://61c412daf1af4a0017d99281.mockapi.io/movies",{method:"GET"})
+    .then((data)=>data.json())
+    .then((movies)=>addingToList(movies));
+},[])
+
+
 
  const [theme, setTheme] = useState(false);
 
