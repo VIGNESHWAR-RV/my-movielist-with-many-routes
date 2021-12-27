@@ -25,6 +25,8 @@ import Brightness4SharpIcon from '@mui/icons-material/Brightness4Sharp';
 import ThumbUpTwoToneIcon from '@mui/icons-material/ThumbUpTwoTone';
 import Badge from '@mui/material/Badge';
 import ThumbDownOffAltTwoToneIcon from '@mui/icons-material/ThumbDownOffAltTwoTone';
+
+
 //MUI-for navBar component
 // import IconButton from '@mui/material/IconButton';
 
@@ -40,7 +42,7 @@ import ThumbDownOffAltTwoToneIcon from '@mui/icons-material/ThumbDownOffAltTwoTo
 const themeCtx = createContext(null);
 
 //navbar component
-function NavBar({movies,adding}){
+function NavBar(){
   const [theme, setTheme] = useContext(themeCtx);
   const themeName  = (theme)?"lightMode":"darkMode"
   const history = useHistory();
@@ -88,13 +90,13 @@ function NavBar({movies,adding}){
              <Home/>
          </Route>
          <Route exact path="/movies">
-            <Movies list={movies} deleting={adding}/>
+            <Movies/>
          </Route>
          <Route exact path="/movies/:id">
-            <MovieDetails list={movies}/>
+            <MovieDetails/>
          </Route>
          <Route exact path="/addMovie">
-             <AddMovie list={movies} addingToList={adding}/>
+             <AddMovie/>
          </Route>
          <Route exact path="/themes">
               <Theming/>
@@ -102,8 +104,11 @@ function NavBar({movies,adding}){
          <Route exact path="/TicTacToe-Game">
                <TicTacToeGame/>
          </Route>
-         <Route exact path="/Color-Game">
-               <ColorGame/>
+         <Route exact path="/TicTacToe-Game">
+               <TicTacToeGame/>
+         </Route>
+         <Route exact path="/movie-edit/:id">
+               <Edit/>
          </Route>
          <Route path="**">
               <h1>404 thala!</h1>
@@ -113,6 +118,103 @@ function NavBar({movies,adding}){
   </div>)
 }
 
+function Edit(){
+  const {id}=useParams();
+  const history = useHistory();
+   
+  const[name,naming]=useState("");
+  const[image,imaging] = useState("");
+  const[trailer,setTrailer] = useState("");
+  const[rating,rate]=useState("");
+  const[summary,story]=useState("");
+
+  const reAssigning=({name,image,trailer,rating,summary})=>{
+      naming(name);
+      imaging(image);
+      setTrailer(trailer);
+      rate(rating);
+      story(summary);
+  }
+  const editing=()=>{
+    fetch(`https://61c412daf1af4a0017d99281.mockapi.io/movies/${id}`,{method:"GET"})
+    .then((data)=>data.json())
+    .then((movie)=>reAssigning(movie))
+
+  }
+  useEffect(editing,[]);
+
+  const Edits=()=>{
+     const editedMovie = {name,image,trailer,rating,summary};
+    fetch(`https://61c412daf1af4a0017d99281.mockapi.io/movies/${id}`,
+            {method:"PUT",
+            body:JSON.stringify(editedMovie),
+            headers:{"Content-Type":"application/json"}})
+      .then(()=>history.push("/movies"));
+  }
+
+  const [theme] = useContext(themeCtx);
+  const style = (theme)?"blackEdit":"whiteEdit";
+
+
+  const [show,showing]= useState(true);
+
+  const[likes,liking]=useState(Math.random().toFixed(1)*10);
+  const[disLikes,disliking]=useState(Math.random().toFixed(1)*10);
+
+  const check=(rating>=8.5)?"green" : (rating>4.5)?"yellow" :"red";
+  const style1=(check==="green")?{background:"green",color:"white"} : (check==="yellow")? {background:"yellow",color:"black"} :  {background:"red",color:"white"} ;
+  const check1=(rating>=8.5)?"😀" : (rating>=4.5)? "🙂": "😒" ;
+
+  return(
+  <div className={style}>
+     <div className="addMovie">
+      <Box className="box" component="form" sx={{display: 'grid', gridTemplateColumns:"1fr", gap: 0.5, padding:"0.5rem"}} noValidate autoComplete="off">  
+        <h3 className="head">Set the movie in your Own way!!!</h3>
+       
+        <TextField helperText="Please enter movie name" color="error" margin="dense" className="inputs" id="standard-basic" value={name} label="Name" variant="standard"  onChange={(event)=>{naming(event.target.value);}}/>
+
+        <TextField helperText="Please enter the image link" color="error" margin="dense" className="inputs" id="standard-basic" value={image} label="ThumbNail Link" variant="standard" onChange={(event)=>{imaging(event.target.value);}}/>
+
+        <TextField helperText="Please enter the trailer link" color="error" margin="dense" className="inputs" id="standard-basic" value={trailer} label="Trailer Link" variant="standard" onChange={(event)=>{setTrailer(event.target.value);}}/>
+      
+        <TextField helperText="Please enter the rating out of 10" color="error" margin="dense" className="inputs" id="standard-basic" value={rating} label="Rating" variant="standard"  onChange={(event)=>{rate(event.target.value);}}/>
+
+        <TextField helperText="Please add a short story about the movie (max: 20 words*)" color="error" margin="dense" className="inputs" value={summary} id="standard-basic" label="Summary" variant="standard"  onChange={(event)=>{story(event.target.value);}}/>
+        
+       <Button className="button"  variant="contained" onClick={()=>Edits()}>Add Changes</Button>
+       <Button className="cancelButton" variant="contained" color="error" onClick={()=>{history.push(`/movies`)}}>Cancel</Button>
+     </Box>
+    </div>
+
+  <div>
+  <h3 className="head">preview</h3>
+   <div className="card">
+      <img src={image} alt={name}></img>
+   <div className="nameAndRAndD">
+     <div className="nameAndR">
+         <h1>{name}</h1>
+         <p className="rating">{check1}<span style={style1}>{rating}</span></p>
+     </div>
+   </div>
+
+    <div className="buttons">
+    <Button className="spoiler" onClick={()=>{showing(!show);}} variant="contained" sx={{color:"#0088f8",background:"gold"}}>Spoiler?👀</Button>
+    <IconButton className="info" onClick={()=>{history.push(`/movies/${id}`)}} sx={{color:"gold"}}><InfoIcon/></IconButton>
+    </div>
+      {show ?<p className="summary"><b>Summary - </b>{summary}</p>: ""}
+   
+    <div className="Likes">
+       <Badge className="button" badgeContent={likes} color="primary">
+       <ThumbUpTwoToneIcon className="like" onClick={()=>liking(likes+1)}/>
+       </Badge>
+       <Badge className="button" badgeContent={disLikes}  size="larger" color="error">
+       <ThumbDownOffAltTwoToneIcon className="disLike" onClick={()=>disliking(disLikes+1)}/>
+       </Badge>
+    </div>
+  </div>
+  </div>
+</div>)
+}
 //home componenet
 function Home(){
   const history = useHistory();
@@ -138,25 +240,35 @@ function Theming(){
 }
 
 //movies component
-function Movies({list,deleting}){
-  const DeleteItem=(id,indexValue)=>{
+function Movies(){
+  const [list,addingToList]=useState([]);
+
+  const getList =()=>{ 
+    fetch("https://61c412daf1af4a0017d99281.mockapi.io/movies",{method:"GET"})
+    .then((data)=>data.json())
+    .then((movies)=>addingToList(movies));
+}
+  const DeleteItem=(id)=>{
     //  const listAfterDelete =  list.filter((movie,id)=>(id!==index));
     //  deleting([...listAfterDelete]);
     //   console.log("moviedeleted");
-     const deletedList = list.filter((movie,index)=>(index!==indexValue));
-     deleting(deletedList);
-     fetch(`https://61c412daf1af4a0017d99281.mockapi.io/movies/${id}`,{method:'DELETE'});
+     fetch(`https://61c412daf1af4a0017d99281.mockapi.io/movies/${id}`,{method:'DELETE'})
+     .then((data)=>data.json())
+     .then(()=>getList());
   }
+  useEffect(getList,[]);
+
+
   const [theme] = useContext(themeCtx);
   const style = (theme)?"overallBlack":"overallWhite";
   return(
     <div className={style}>
-       {list.map(({id,name,image,rating,summary},index)=><EachMovie key={index} position={index} id={id} name={name} image={image} rating={rating} summary={summary} delFunc = {DeleteItem}/>)}
+       {list.map(({id,name,image,rating,summary},index)=><EachMovie key={index} id={id} name={name} image={image} rating={rating} summary={summary} delFunc = {DeleteItem}/>)}
     </div>
   );
 }
 
-function EachMovie({id,name,image,rating,summary,delFunc,position}){
+function EachMovie({id,name,image,rating,summary,delFunc}){
   const history = useHistory();
   const [show,showing]= useState(false);
 
@@ -174,14 +286,15 @@ function EachMovie({id,name,image,rating,summary,delFunc,position}){
          <h1>{name}</h1>
          <p className="rating">{check1}<span style={style}>{rating}</span></p>
      </div>
-    <IconButton className="delete"  aria-label="delete" size="large" onClick={()=>delFunc(id,position)}>
+    <IconButton className="delete"  aria-label="delete" size="large" onClick={()=>delFunc(id)}>
          <DeleteTwoToneIcon className="deleteColor" sx={{color:"red"}} />
     </IconButton>
   </div>
 
     <div className="buttons">
     <Button className="spoiler" onClick={()=>{showing(!show);}} variant="contained" sx={{color:"#0088f8",background:"gold"}}>Spoiler?👀</Button>
-    <IconButton className="info" onClick={()=>{history.push(`/movies/${position}`)}} sx={{color:"gold"}}><InfoIcon/></IconButton>
+    <IconButton className="info" onClick={()=>{history.push(`/movies/${id}`)}} sx={{color:"gold"}}><InfoIcon/></IconButton>
+    <Button color="error" onClick={()=>history.push(`/movie-edit/${id}`)}>Edit</Button>
     </div>
       {show ?<p className="summary"><b>Summary - </b>{summary}</p>: ""}
    
@@ -197,19 +310,25 @@ function EachMovie({id,name,image,rating,summary,delFunc,position}){
 }
 
 //addMovie component
-function AddMovie({list,addingToList}){
+function AddMovie(){
    const history = useHistory();
    const[name,naming]=useState("");
    const[image,imaging] = useState("");
+   const[trailer,setTrailer] = useState("");
    const[rating,rate]=useState("");
    const[summary,story]=useState("");
    const [theme] = useContext(themeCtx);
    const style = (theme)?"blackAdd":"whiteAdd";
-  const adding=()=>{
-    const newMovie={name,image,rating,summary};
-    addingToList([...list,newMovie]);
-    history.push("/movies");
-  }
+  
+   
+   const adding=()=>{
+     const newMovie = {name,image,trailer,rating,summary};
+     fetch("https://mockapi.io/projects/61c412daf1af4a0017d99282",
+     {method:"POST",
+      body:JSON.stringify(newMovie),
+      headers:{"Content-Type": "application/json"}})
+     .then(()=>history.push(`/movies`));
+   }
 
    return(
     <div className={style}>
@@ -219,23 +338,34 @@ function AddMovie({list,addingToList}){
        
         <TextField helperText="Please enter movie name" color="error" margin="dense" className="inputs" id="standard-basic" label="Name" variant="standard"  onChange={(event)=>{naming(event.target.value);}}/>
 
-        <TextField helperText="Please enter the image link" color="error" margin="dense" className="inputs" id="standard-basic" label="ThumbNail" variant="standard" onChange={(event)=>{imaging(event.target.value);}}/>
+        <TextField helperText="Please enter the image link" color="error" margin="dense" className="inputs" id="standard-basic" label="ThumbNail Link" variant="standard" onChange={(event)=>{imaging(event.target.value);}}/>
 
+        <TextField helperText="Please enter the trailer link" color="error" margin="dense" className="inputs" id="standard-basic" label="Trailer Link" variant="standard" onChange={(event)=>{setTrailer(event.target.value);}}/>
+      
         <TextField helperText="Please enter the rating out of 10" color="error" margin="dense" className="inputs" id="standard-basic" label="Rating" variant="standard"  onChange={(event)=>{rate(event.target.value);}}/>
 
         <TextField helperText="Please add a short story about the movie (max: 20 words*)" color="error" margin="dense" className="inputs" id="standard-basic" label="Summary" variant="standard"  onChange={(event)=>{story(event.target.value);}}/>
-
-       <Button className="button" onClick={()=> {(name!=="" && image!=="" && rating!=="" && summary!=="" )?adding():alert("enter the details to add");}} variant="contained">Add Movie</Button>
-       <Button className="cancelButton" variant="contained" color="error" onClick={()=>{addingToList([...list]); history.push("/movies");}}>Cancel</Button>
+        
+       <Button className="button" onClick={()=>adding()} variant="contained">Add Movie</Button>
+       <Button className="cancelButton" variant="contained" color="error" onClick={()=>{history.push(`/movies`)}}>Cancel</Button>
      </Box>
     </div>
   </div>);
 }
 
-//movieDetai component
-function MovieDetails({list}){
+//movieDetails component
+function MovieDetails(){
+  const [movie,setMovie]=useState([])
   const {id}=useParams();
-  const movieViewed = list[id];
+  const getMovies= ()=>{
+    fetch(`https://61c412daf1af4a0017d99281.mockapi.io/movies/${id}`,{method:"GET"})
+    .then((data)=>data.json())
+    .then((movie)=>setMovie(movie));
+
+  }
+  useEffect(getMovies,[]);
+  const movieViewed = movie;
+
   const [theme] = useContext(themeCtx);
   const style = (theme)?"overallBlack":"overallWhite";
   return(
@@ -375,22 +505,13 @@ function App() {
 //  summary:"A warrior gets reincarnated 400 years later, after trying to save the princess and the kingdom, who also dies along with him. He then sets back again to fight against all odds and win back his love."},
 //  ];
 
- const [list,addingToList]=useState([]);
-useEffect(()=>{
-    fetch("https://61c412daf1af4a0017d99281.mockapi.io/movies",{method:"GET"})
-    .then((data)=>data.json())
-    .then((movies)=>addingToList(movies));
-},[])
-
-
 
  const [theme, setTheme] = useState(false);
-
 
   return (
     <themeCtx.Provider value={[theme, setTheme]}>
     <div className="App">
-       <NavBar movies={list} adding={addingToList}/>
+       <NavBar/>
     </div>
     </themeCtx.Provider>
   );

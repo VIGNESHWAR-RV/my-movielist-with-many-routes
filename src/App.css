@@ -170,7 +170,182 @@
   transition: 0.3s ease-in-out;
 }
 
+/*Edit*/
 
+.blackEdit{
+  display: grid;
+  grid-template-columns: 2fr 2fr;
+  gap:2rem;
+  padding:5rem;
+  background-image: url(./wallE-daysAndNights/set1-night.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height:calc(100vh - 64px);
+}
+.whiteEdit{
+  display: grid;
+  grid-template-columns:repeat(auto-fit,minmax(20rem,1fr));
+  gap:2rem;
+  padding:5rem;
+  background-image: url(./wallE-daysAndNights/set1-day.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height:calc(100vh - 64px);
+}
+.whiteEdit>.addMovie>.box,.blackAdd>.addMovie>.box{
+  padding:1rem;
+}
+.whiteEdit>.addMovie>.box>.head{
+  color:#008cff;
+  font-size: 2rem;
+}
+.blackEdit>.addMovie>.box>.head{
+  color:gold;
+  font-size: 2rem;
+}
+.whiteEdit>.addMovie>.box>.inputs{
+   background: #fffffff3;
+   border-bottom: 3px solid #008cff;
+   border-radius:5px;
+   padding-left: 0.5rem;
+   max-width: 50rem;
+}
+.blackEdit>.addMovie>.box>.inputs{
+  background: #fffffff3;
+  border-bottom: 3px solid gold;
+  border-radius:5px;
+  padding-left: 0.5rem;
+ max-width: 50rem;
+}
+.whiteEdit>.addMovie>.box>.button{
+  margin:0.5rem 0;
+  color:white;
+  background:#008cff;
+  max-width: 20rem;
+}
+.blackEdit>.addMovie>.box>.button{
+  margin:0.5rem 0;
+  color:black;
+  background:gold;
+  max-width: 20rem;
+}
+.whiteEdit>.addMovie>.box>.button:hover{
+  box-shadow: 2px 2px 5px 5px #008cff,-2px -2px 5px 5px #008cff;
+}
+.blackEdit>.addMovie>.box>.button:hover{
+  box-shadow: 2px 2px 5px 5px gold,-2px -2px 5px 5px gold;
+}
+.whiteEdit>.addMovie>.box>.cancelButton,
+.blackEdit>.addMovie>.box>.cancelButton{
+  background:#D32F2F;
+  max-width: 20rem;
+}
+.whiteEdit>.addMovie>.box>.cancelButton:hover,
+.blackEdit>.addMovie>.box>.cancelButton:hover{
+  box-shadow: 2px 2px 5px 5px #D32F2F,-2px -2px 5px 5px #D32F2F;
+}
+
+
+.whiteEdit>div>.head{
+  color:#008cff;
+  font-size: 2rem;;
+}
+.blackEdit>div>.head{
+  color:gold;
+  font-size: 2rem;
+}
+
+.whiteEdit>div>.card{
+  background: hsla(206, 100%, 50%, 0.493);
+  border-radius: 25px;
+  padding:px;
+  overflow: hidden;
+  border:5px solid hsl(206, 100%, 50%);
+  max-width: 25rem;
+}
+.blackEdit>div>.card{
+  background: rgba(255, 217, 0, 0.39);
+  border-radius: 25px;
+  padding:8px;
+  overflow: hidden;
+  border:5px solid gold;
+  max-width: 25rem;
+}
+.whiteEdit>div>.card>img{
+  width:100%;
+  height:12rem;
+  border-radius:25px;
+  object-fit: cover;
+  border:3px solid hsl(206, 100%, 50%);
+}
+.blackEdit>div>.card>img{
+  width:100%;
+  height:12rem;
+  border-radius:25px;
+  object-fit: cover;
+  border:3px solid rgba(255, 217, 0, 0.39);
+}
+.card>img:hover{
+  transform: scale(1.15);
+  transition: 0.3s ease-in-out;
+}
+.whiteEdit>div>.card>.nameAndRAndD>.nameAndR{
+  display:flex;
+  justify-content:flex-start;
+  padding:5px;
+  align-items:center;
+  color:white;
+}
+.blackEdit>div>.card>.nameAndRAndD>.nameAndR{
+  display:flex;
+  justify-content:flex-start;
+  padding:5px;
+  align-items:center;
+  color:black;
+}
+
+.whiteEdit>div>.card>.buttons>.spoiler{
+  background-color:#008cff;
+  color: white;
+}
+.blackEdit>div>.card>.buttons>.spoiler{
+  background-color:gold;
+  color: black;
+}
+.whiteEdit>div>.card>.buttons>.spoiler:hover{
+  color:gold;
+  transform: scale(1.15);
+  transition: 0.2s ease-in-out;
+}
+.blackEdit>div>.card>.buttons>.spoiler:hover{
+  color:#008cff;
+  transform: scale(1.15);
+  transition: 0.2s ease-in-out;
+}
+.blackEdit>div>.card>.buttons>.info{
+  color: black;
+}
+.whiteEdit>div>.card>.buttons>.info{
+  color: white;
+}
+.whiteEdit>div>.card>.summary{
+  color:white;
+  padding-left: 6px;
+}
+.whiteEdit>div>.card>.summary>b{
+  color:black;
+}
+.blackEdit>div>.card>.summary>b{
+  color:white;
+}
+.blackEdit>div>.card>.summary{
+  color:black;
+  padding-left: 6px;
+}
 /* Movies */
 
 .overallBlack{
