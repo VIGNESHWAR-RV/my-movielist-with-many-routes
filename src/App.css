@@ -434,6 +434,17 @@
   padding-left:5px;
   align-items:center;
 }
+.overallWhite>.card>.buttons,.overallBlack>.card>.buttons{
+  display:flex;
+}
+.overallWhite>.card>.buttons>.Edit{
+  color:red;
+  margin-left: auto;
+}
+.overallBlack>.card>.buttons>.Edit{
+  color:red;
+  margin-left: auto;
+}
 .overallWhite>.card>.buttons>.spoiler{
   background-color:#008cff;
   color: white;
@@ -524,45 +535,56 @@
   color:gold;
   font-size: 2rem;
 }
-.whiteAdd>.addMovie>.box>.inputs{
+.whiteAdd>.addMovie>.box>form>.inputs{
    background: #fffffff3;
    border-bottom: 3px solid #008cff;
    border-radius:5px;
    padding-left: 0.5rem;
+   width:40%;
    max-width: 28rem;
 }
-.blackAdd>.addMovie>.box>.inputs{
+.blackAdd>.addMovie>.box>form>.inputs{
   background: #fffffff3;
   border-bottom: 3px solid gold;
   border-radius:5px;
   padding-left: 0.5rem;
+  width:40%;
   max-width: 28rem;
 }
-.whiteAdd>.addMovie>.box>.button{
+.whiteAdd>.addMovie>.box>form>span{
+   border-radius: 10px;
+   background: #0088f8;
+   color:white;
+}
+.blackAdd>.addMovie>.box>form>span{
+ border-radius: 10px;
+ background: gold;
+}
+.whiteAdd>.addMovie>.box>form>.button{
   margin:0.5rem 0;
   color:white;
   background:#008cff;
   max-width: 20rem;
 }
-.blackAdd>.addMovie>.box>.button{
+.blackAdd>.addMovie>.box>form>.button{
   margin:0.5rem 0;
   color:black;
   background:gold;
   max-width: 20rem;
 }
-.whiteAdd>.addMovie>.box>.button:hover{
+.whiteAdd>.addMovie>.box>form>.button:hover{
   box-shadow: 2px 2px 5px 5px #008cff,-2px -2px 5px 5px #008cff;
 }
-.blackAdd>.addMovie>.box>.button:hover{
+.blackAdd>.addMovie>.box>form>.button:hover{
   box-shadow: 2px 2px 5px 5px gold,-2px -2px 5px 5px gold;
 }
-.whiteAdd>.addMovie>.box>.cancelButton,
-.blackAdd>.addMovie>.box>.cancelButton{
+.whiteAdd>.addMovie>.box>form>.cancelButton,
+.blackAdd>.addMovie>.box>form>.cancelButton{
   background:#D32F2F;
   max-width: 20rem;
 }
-.whiteAdd>.addMovie>.box>.cancelButton:hover,
-.blackAdd>.addMovie>.box>.cancelButton:hover{
+.whiteAdd>.addMovie>.box>form>.cancelButton:hover,
+.blackAdd>.addMovie>.box>form>.cancelButton:hover{
   box-shadow: 2px 2px 5px 5px #D32F2F,-2px -2px 5px 5px #D32F2F;
 }
 
