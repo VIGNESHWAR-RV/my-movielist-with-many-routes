@@ -1,4 +1,4 @@
-import { useState } from 'react';
+//import { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { useContext } from 'react';
 import Button from '@mui/material/Button';
@@ -27,15 +27,20 @@ export function AddMovie() {
 
 const formValidationSchema = yup.object({
   name: yup.string()
-            .required("No one can add a movie without Movie Name?😀"),
+            .required("No one can add a movie without Movie Name?😀")
+            .max(15,"Why dont we make it easy to read?🙄"),
   image:yup.string()
            .required("so ,where is the poster?😀"),
   trailer:yup.string()
               .required("Movie can be boring but We can create hype with trailer😀"),
   rating:yup.number()
-            .required("Often people watch movies only by reviews😁"),
+            .required("Often people watch movies only by reviews😁")
+            .min(1,"Give a Better Rating⭐")
+            .max(10,"Too Much rating😂"),
   summary:yup.string()
              .required("so What is this all about friend🤷‍♂️")
+             .min(20 , "Give some spoiler too😂")
+             .max(40, "Too much spoilers😅")
 })
 
 
@@ -61,7 +66,7 @@ function BasicForm(){
 
      onSubmit:(values)=>{
          adding(values);
-        console.log(values);
+    
      }
     })
   
@@ -81,9 +86,9 @@ function BasicForm(){
       color="error"
       margin='dense'
       placeholder='Enter the Movie Name'
+      error={touched.name && errors.name}
+      helperText = {(touched.name && errors.name) ? errors.name : ""}
       />
-      <br/>
-      <span> {touched.name && errors.name ? errors.name : ""}</span>
      
       <br/>
       <br/>
@@ -101,9 +106,9 @@ function BasicForm(){
       color="error"
       margin="dense"
       placeholder='Enter the Thumbnail Link'
+      error={touched.image && errors.image}
+      helperText = {(touched.image && errors.image) ? errors.image : ""}
       />
-      <br/>
-      <span> {touched.image && errors.image ? errors.image : ""}</span>
      
       <br/>
       <br/>
@@ -121,9 +126,9 @@ function BasicForm(){
       color="error"
       margin="dense"
       placeholder='Enter the Trailer Link'
+      error={touched.trailer && errors.trailer}
+      helperText = {(touched.trailer && errors.trailer) ? errors.trailer : ""}
       />
-      <br/>
-      <span>{touched.trailer && errors.trailer ? errors.trailer : ""}</span>
       
       <br/>
       <br/>
@@ -142,10 +147,10 @@ function BasicForm(){
       margin="dense"
       type="number"
       placeholder='What is your Rating out of 10'
+      error={touched.rating && errors.rating}
+      helperText = {(touched.rating && errors.rating) ? errors.rating : ""}
       />
-      <br/>
-      <span>{touched.rating && errors.rating ? errors.rating : ""}</span>
-   
+  
       <br/>
       <br/>
 
@@ -162,9 +167,9 @@ function BasicForm(){
       color="error"
       margin="dense"
       placeholder='Enter a short description about the Movie'
+      error={touched.summary && errors.summary}
+      helperText = {(touched.summary && errors.summary) ? errors.summary : ""}
       />
-      <br/>
-      <span>{touched.summary && errors.summary ? errors.summary : ""}</span>
       
       <br/>
       <br/>

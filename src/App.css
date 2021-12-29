@@ -174,7 +174,7 @@
 
 .blackEdit{
   display: grid;
-  grid-template-columns: 2fr 2fr;
+  grid-template-columns:repeat(auto-fit,minmax(20rem,1fr));
   gap:2rem;
   padding:5rem;
   background-image: url(./wallE-daysAndNights/set1-night.jpg);
@@ -196,7 +196,7 @@
   background-size: cover;
   min-height:calc(100vh - 64px);
 }
-.whiteEdit>.addMovie>.box,.blackAdd>.addMovie>.box{
+.whiteEdit>.addMovie>.box,.blackEdit>.addMovie>.box{
   padding:1rem;
 }
 .whiteEdit>.addMovie>.box>.head{
@@ -207,45 +207,57 @@
   color:gold;
   font-size: 2rem;
 }
-.whiteEdit>.addMovie>.box>.inputs{
+.whiteEdit>.addMovie>.box>form>.inputs{
    background: #fffffff3;
    border-bottom: 3px solid #008cff;
    border-radius:5px;
    padding-left: 0.5rem;
-   max-width: 50rem;
+   width:100%;
+   max-width: 45rem;
 }
-.blackEdit>.addMovie>.box>.inputs{
+.blackEdit>.addMovie>.box>form>.inputs{
   background: #fffffff3;
   border-bottom: 3px solid gold;
   border-radius:5px;
   padding-left: 0.5rem;
- max-width: 50rem;
+  width:100%;
+  max-width: 45rem;
 }
-.whiteEdit>.addMovie>.box>.button{
+.whiteEdit>.addMovie>.box>form>span{
+  border-radius: 10px;
+  background: red;
+  color:white;
+}
+.blackEdit>.addMovie>.box>form>span{
+border-radius: 10px;
+background: red;
+color:white;
+}
+.whiteEdit>.addMovie>.box>form>.button{
   margin:0.5rem 0;
   color:white;
   background:#008cff;
   max-width: 20rem;
 }
-.blackEdit>.addMovie>.box>.button{
+.blackEdit>.addMovie>.box>form>.button{
   margin:0.5rem 0;
   color:black;
   background:gold;
   max-width: 20rem;
 }
-.whiteEdit>.addMovie>.box>.button:hover{
+.whiteEdit>.addMovie>.box>form>.button:hover{
   box-shadow: 2px 2px 5px 5px #008cff,-2px -2px 5px 5px #008cff;
 }
-.blackEdit>.addMovie>.box>.button:hover{
+.blackEdit>.addMovie>.box>form>.button:hover{
   box-shadow: 2px 2px 5px 5px gold,-2px -2px 5px 5px gold;
 }
-.whiteEdit>.addMovie>.box>.cancelButton,
-.blackEdit>.addMovie>.box>.cancelButton{
+.whiteEdit>.addMovie>.box>form>.cancelButton,
+.blackEdit>.addMovie>.box>form>.cancelButton{
   background:#D32F2F;
   max-width: 20rem;
 }
-.whiteEdit>.addMovie>.box>.cancelButton:hover,
-.blackEdit>.addMovie>.box>.cancelButton:hover{
+.whiteEdit>.addMovie>.box>form>.cancelButton:hover,
+.blackEdit>.addMovie>.box>form>.cancelButton:hover{
   box-shadow: 2px 2px 5px 5px #D32F2F,-2px -2px 5px 5px #D32F2F;
 }
 
@@ -262,7 +274,7 @@
 .whiteEdit>div>.card{
   background: hsla(206, 100%, 50%, 0.493);
   border-radius: 25px;
-  padding:px;
+  padding:8px;
   overflow: hidden;
   border:5px solid hsl(206, 100%, 50%);
   max-width: 25rem;
@@ -307,6 +319,7 @@
   align-items:center;
   color:black;
 }
+
 
 .whiteEdit>div>.card>.buttons>.spoiler{
   background-color:#008cff;

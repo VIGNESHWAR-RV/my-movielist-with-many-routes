@@ -13,9 +13,9 @@ import { Home } from './Home';
 import { Edit } from './Edit';
 import { themeCtx } from './App';
 
-
 import {useFormik} from "formik";
 import * as yup from 'yup';
+import { Reducer } from './Redux';
 
 
 //navbar component
@@ -45,6 +45,11 @@ export function NavBar() {
 
           <Button className="navButtons" color="inherit" variant="text" onClick={() => history.push(`/TicTacToe-Game`)}>
             <span className="animate__animated animate__bounceInLeft animate__slow ">TicTacToe Game</span>
+          </Button>
+
+
+          <Button className="navButtons" color="inherit" variant="text" onClick={() => history.push(`/color-Game`)}>
+            <span className="animate__animated animate__bounceInLeft animate__slow ">Redux</span>
           </Button>
         </div>
         <div className="themeSwitch">
@@ -84,8 +89,8 @@ export function NavBar() {
       <Route exact path="/TicTacToe-Game">
         <TicTacToeGame />
       </Route>
-      <Route exact path="/TicTacToe-Game">
-        <TicTacToeGame />
+      <Route exact path="/color-Game">
+        <Reducer />
       </Route>
       <Route exact path="/basic-form">
           <BasicForm/>
@@ -342,3 +347,5 @@ function BasicForm(){
     </form>
   );
 }
+
+
