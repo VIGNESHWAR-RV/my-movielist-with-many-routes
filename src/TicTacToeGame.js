@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useContext } from 'react';
 import useWindowSize from 'react-use/lib/useWindowSize';
 import Confetti from 'react-confetti';
+import { NavBar } from './NavBar';
 import { themeCtx } from './App';
 
 //TicTacToe-Game componenet
@@ -44,6 +45,8 @@ export function TicTacToeGame() {
   const style = { display: (hide) ? "none" : "block" };
 
   return (
+    <>
+    <NavBar/>
     <div className={style1}>
       <div>
         <h1 style={{ textAlign: "center" }}><b className="childHood">Lets Bring BACK the CHILDHOOD!!!</b></h1>
@@ -67,6 +70,7 @@ export function TicTacToeGame() {
         </div>
       </div>
     </div>
+    </>
   );
 }
 function BoxesInGame({ val, playerChange }) {

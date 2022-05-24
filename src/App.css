@@ -1,48 +1,3 @@
-/* .App {
-  text-align: center;
-}
-
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
-}
-
-.App-link {
-  color: #61dafb;
-}
-
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-} */
-
-/* display: inline-block;
-    margin: 0 0.5rem;
-  
-    animation: bounce; /* referring directly to the animation's @keyframe declaration */
-   /* animation-duration: 2s; */
-
 
   /* AppBar */
 
@@ -50,6 +5,7 @@
   display:flex;
   justify-content: space-between;
   cursor: pointer;
+  overflow: hidden;
 }
 
 .lightMode>.buttonsDiv>.navButtons,
@@ -101,15 +57,14 @@
 
 .blackHome,.whiteHome{
   display: grid;
-  padding:4rem;
-  padding-left: 2rem;
+  overflow: hidden;
   font-size:1rem;
   background:url("./wallE-daysAndNights/set3-day.jpg");
   background-position: center center;
   background-repeat: no-repeat;
   background-attachment: fixed;
   background-size: cover;
-  min-height:calc(100vh - 192px);
+  min-height:100vh;
 }
 .blackHome{
   background:url("./wallE-daysAndNights/set3-night.jpg");
@@ -119,56 +74,220 @@
   background-size: cover;
 }
 .blackHome>div{
-  margin-top:-25rem;
   color:transparent;
   background:linear-gradient(to right,gold,#0088f8);
   background-clip: text;
   -webkit-background-clip:text;
+  display: grid;
+  align-content:start;
+  justify-content: stretch;
+  font-size: larger;
+  margin: 3% 2%;
 }
 .whiteHome>div{
-  margin-top:-25rem;
   color:transparent;
   background:linear-gradient(to left,gold,#0088f8);
   background-clip: text;
   -webkit-background-clip:text;
+  display: grid;
+  align-content:start;
+  justify-content: stretch;
+  font-size: larger;
+  margin: 3% 2%;
 }
-.blackHome>span{
-  color:transparent;
-  background:linear-gradient(to right,gold,#008cff);
-  background-clip: content;
-  -webkit-background-clip:text;
-  font-size:3rem;
+
+.whiteHome>div>.loginFormOuterDiv{
+  display: grid;
+  width:max-content;
+  padding:4%;
+  background: rgba(0, 136, 248,0.85);
+  border:4px solid rgb(0, 136, 248);
+  justify-items: center;
+  border-radius: 25px;
 }
-.whiteHome>span{
-  color:transparent;
-  background:linear-gradient(to left,gold,#008cff);
-  background-clip: content;
-  -webkit-background-clip:text;
-  font-size:3rem;
+.whiteHome>div>.loginFormOuterDiv>hr{
+  width:100%;
+  margin:15% 0 0 0;
 }
-.blackHome>div>button{
-  margin: 0.8rem;
-  padding:1rem;
-  border-radius: 15px;
-  border:2px solid white;
-  background-color:yellow;
-  font-size: 2rem;
-  cursor: pointer;
+.whiteHome>div>.loginFormOuterDiv>form>input{
+
+   padding:12% 0%;
+   margin: 6% 0%;
+   width:15rem;
+   border-radius: 25px;
+   border: none;
+   box-shadow: inset 2px 2px 3px 1px #0088f8 , 2px 2px 3px 1px #0088f8;
+   text-align:center;
+
 }
-.whiteHome>div>button{
-  margin: 0.8rem;
-  padding:1rem;
-  border-radius: 15px;
-  border:2px solid black;
-  background-color:#008cff;
-  color: white;
-  font-size: 2rem;
-  cursor: pointer;
+.whiteHome>div>.loginFormOuterDiv>form{
+  margin-top: 2rem;
 }
-.whiteHome>div>button:hover,.blackHome>div>button:hover{
-  transform: scale(1.15);
-  transition: 0.3s ease-in-out;
+.whiteHome>div>.loginFormOuterDiv>form>button{
+    border:2px solid #0088f8;
+    border-radius: 25px;
+    color: #0088f8;
+    background-color: whitesmoke;
+    padding: 3%;
 }
+.whiteHome>div>.loginFormOuterDiv>form>div>h3{
+    color:white;
+}
+.whiteHome>div>.loginFormOuterDiv>form>div>button{
+  border:2px solid #0088f8;
+  border-radius: 25px;
+  color: #0088f8;
+  background-color: whitesmoke;
+  margin-left: auto;
+  font-size: large;
+  padding: 2%;
+}
+
+
+.blackHome>div>.loginFormOuterDiv{
+  display: grid;
+  width:max-content;
+  padding:4%;
+  background: rgba(255,215,0,0.85);
+  border:4px solid gold;
+  justify-items: center;
+  border-radius: 25px;
+}
+.blackHome>div>.loginFormOuterDiv>hr{
+  width:100%;
+  margin:15% 0 0 0;
+}
+.blackHome>div>.loginFormOuterDiv>form>input{
+
+   padding:12% 0%;
+   margin: 6% 0%;
+   width:15rem;
+   border-radius: 25px;
+   border: none;
+   background-color: black;
+   color:white;
+   box-shadow: inset 2px 2px 3px 1px gold , 2px 2px 3px 1px gold;
+   text-align:center;
+
+}
+.blackHome>div>.loginFormOuterDiv>form{
+  margin-top: 2rem;
+}
+.blackHome>div>.loginFormOuterDiv>form>button{
+    border:2px solid gold;
+    border-radius: 25px;
+    color: gold;
+    background-color: black;
+    padding: 3%;
+}
+.blackHome>div>.loginFormOuterDiv>form>div>h3{
+    color:white;
+}
+.blackHome>div>.loginFormOuterDiv>form>div>button{
+  border:2px solid gold;
+  border-radius: 25px;
+  color: gold;
+  background-color: black;
+  margin-left: auto;
+  font-size: large;
+  padding: 2%;
+}
+
+.whiteHome>div>.signUpFormOuterDiv{
+  display: grid;
+  width:max-content;
+  padding:4%;
+  background: rgba(0, 136, 248,0.85);
+  border:4px solid rgb(0, 136, 248);
+  justify-items: center;
+  border-radius: 25px;
+}
+.whiteHome>div>.signUpFormOuterDiv>hr{
+  width:100%;
+  margin:15% 0 0 0;
+}
+.whiteHome>div>.signUpFormOuterDiv>form>input{
+
+   padding:12% 0%;
+   margin: 6% 0%;
+   width:15rem;
+   border-radius: 25px;
+   border: none;
+   box-shadow: inset 2px 2px 3px 1px #0088f8 , 2px 2px 3px 1px #0088f8;
+   text-align:center;
+
+}
+.whiteHome>div>.signUpFormOuterDiv>form{
+  margin-top: 2rem;
+}
+.whiteHome>div>.signUpFormOuterDiv>form>button{
+    border:2px solid #0088f8;
+    border-radius: 25px;
+    color: #0088f8;
+    background-color: whitesmoke;
+    padding: 3%;
+}
+.whiteHome>div>.signUpFormOuterDiv>form>div>h3{
+    color:white;
+}
+.whiteHome>div>.signUpFormOuterDiv>form>div>button{
+  border:2px solid #0088f8;
+  border-radius: 25px;
+  color: #0088f8;
+  background-color: whitesmoke;
+  margin-left: auto;
+  font-size: large;
+  padding: 2%;
+}
+
+.blackHome>div>.signUpFormOuterDiv{
+  display: grid;
+  width:max-content;
+  padding:4%;
+  background: rgba(255, 215, 0,0.85);
+  border:4px solid gold;
+  justify-items: center;
+  border-radius: 25px;
+}
+.blackHome>div>.signUpFormOuterDiv>hr{
+  width:100%;
+  margin:15% 0 0 0;
+}
+.blackHome>div>.signUpFormOuterDiv>form>input{
+
+   padding:12% 0%;
+   margin: 6% 0%;
+   width:15rem;
+   border-radius: 25px;
+   border: none;
+   box-shadow: inset 2px 2px 3px 1px gold , 2px 2px 3px 1px gold;
+   text-align:center;
+   color:gold;
+   background-color: black;
+}
+.blackHome>div>.signUpFormOuterDiv>form{
+  margin-top: 2rem;
+}
+.blackHome>div>.signUpFormOuterDiv>form>button{
+    border:2px solid gold;
+    border-radius: 25px;
+    color: gold;
+    background-color: black;
+    padding: 3%;
+}
+.blackHome>div>.signUpFormOuterDiv>form>div>h3{
+    color:white;
+}
+.blackHome>div>.signUpFormOuterDiv>form>div>button{
+  border:2px solid gold;
+  border-radius: 25px;
+  color: gold;
+  background-color: black;
+  margin-left: auto;
+  font-size: large;
+  padding: 2%;
+}
+
 
 /*Edit*/
 
@@ -388,18 +507,19 @@ color:white;
   min-height:calc(100vh - 64px);
 }
 .overallWhite>.card{
-  background: hsla(206, 100%, 50%, 0.493);
+  background: hsla(206, 100%, 50%, 0.85);
   border-radius: 25px;
   padding:8px;
   overflow: hidden;
   border:5px solid hsl(206, 100%, 50%);
 }
 .overallBlack>.card{
-  background: rgba(255, 217, 0, 0.39);
+  background: rgba(255, 217, 0, 0.85);
   border-radius: 25px;
   padding:8px;
   overflow: hidden;
   border:5px solid gold;
+  
 }
 .overallWhite>.card>img{
   width:100%;
@@ -407,6 +527,7 @@ color:white;
   border-radius:25px;
   object-fit: cover;
   border:3px solid hsl(206, 100%, 50%);
+  transition: 0.3s ease-in-out;
 }
 .overallBlack>.card>img{
   width:100%;
@@ -414,10 +535,10 @@ color:white;
   border-radius:25px;
   object-fit: cover;
   border:3px solid rgba(255, 217, 0, 0.39);
+  transition: 0.3s ease-in-out;
 }
 .card>img:hover{
-  transform: scale(1.15);
-  transition: 0.3s ease-in-out;
+  transform: scale(1.03);
 }
 .overallWhite>.card>.nameAndRAndD>.nameAndR{
   display:flex;
@@ -449,39 +570,38 @@ color:white;
 }
 .overallWhite>.card>.buttons,.overallBlack>.card>.buttons{
   display:flex;
+  justify-content: center;
 }
-.overallWhite>.card>.buttons>.Edit{
+/* .overallWhite>.card>.buttons>.Edit{
   color:red;
   margin-left: auto;
 }
 .overallBlack>.card>.buttons>.Edit{
   color:red;
   margin-left: auto;
-}
+} */
 .overallWhite>.card>.buttons>.spoiler{
   background-color:#008cff;
   color: white;
+  transition: 0.4s ease-in-out;
 }
 .overallBlack>.card>.buttons>.spoiler{
   background-color:gold;
   color: black;
+  transition: 0.4s ease-in-out;
 }
 .overallWhite>.card>.buttons>.spoiler:hover{
-  color:gold;
-  transform: scale(1.15);
-  transition: 0.2s ease-in-out;
+  color:#008cff;
+  background-color: white;
+  transform: scale(1.05);
 }
 .overallBlack>.card>.buttons>.spoiler:hover{
-  color:#008cff;
-  transform: scale(1.15);
-  transition: 0.2s ease-in-out;
+  color:gold;
+  background-color: black;
+  transform: scale(1.05);
+  
 }
-.overallBlack>.card>.buttons>.info{
-  color: black;
-}
-.overallWhite>.card>.buttons>.info{
-  color: white;
-}
+
 .overallWhite>.card>.summary{
   color:white;
   padding-left: 6px;
@@ -498,24 +618,65 @@ color:white;
 }
 .Likes{
   margin: 1rem;
+  margin-top: 2rem;
   display:flex;
   justify-content:space-around;
   padding-right: 1rem;
 }
+
 .Likes>.button>.like{
-   font-size:2rem;
-   
+   font-size:2rem; 
+}
+.overallBlack>.card>.Likes>.button>.like{
+   color: gold;
+   background-color: black;
+   border: 1px solid white;
+   padding: 1%;
+   border-radius: 1rem;
+}
+.overallWhite>.card>.Likes>.button>.like{
+  color: #0088f8;
+  background-color: white;
+  border: 1px solid black;
+  padding: 1%;
+  border-radius: 1rem;
+}
+.overallBlack>.card>.Likes>.info{
+  background-color: black;
+  color: gold;
+  border-radius: 0.5rem;
+  border:1px solid white;
+}
+.overallWhite>.card>.Likes>.info{
+  background-color: white;
+  color: #0088f8;
+  border-radius: 0.5rem;
+  border: 1px solid black;
 }
 .Likes>.button>.disLike{
    font-size:2rem;
 }
-.Likes>.button>.like:hover{
-  transform: scale(1.25);
-  transition: 0.2s ease-in-out;
+.overallBlack>.card>.Likes>.button>.disLike{
+  color: gold;
+  background-color: black;
+  border: 1px solid white;
+  padding: 1%;
+  border-radius: 1rem;
 }
+.overallWhite>.card>.Likes>.button>.disLike{
+ color: #0088f8;
+ background-color: white;
+ border: 1px solid black;
+ padding: 1%;
+ border-radius: 1rem;
+}
+
+.overallBlack>.card>.Likes>.info:hover,
+.overallWhite>.card>.Likes>.info:hover,
+.Likes>.button>.like:hover,
 .Likes>.button>.disLike:hover{
-  transform: scale(1.25);
-  transition: 0.2s ease-in-out;
+  transform: scale(1.15);
+  transition: 0.3s ease-in-out;
 }
 
 
@@ -603,53 +764,199 @@ color:white;
 
 
 /* Movie Details */
-.overallWhite>.movieDetail,.overallBlack>.movieDetail{
+.overallMovieBlack{
+  background-image: url(./wallE-daysAndNights/set1-night.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height:calc(100vh - 70px);
+}
+.overallMovieWhite{
+  background-image: url(./wallE-daysAndNights/set1-day.jpg);
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-size: cover;
+  min-height:calc(100vh - 70px);
+}
+.overallMovieWhite>.movieDetail,
+.overallMovieBlack>.movieDetail{
+  width:100%;
   display:grid;
-  place-content: center;
-  place-items: center;
-}
-.overallBlack>.movieDetail>.movieDetails>iframe{
-  border:4px solid gold;
-  border-radius:25px;
-}
-.overallWhite>.movieDetail>.movieDetails>iframe{
-  border:4px solid #008cff;
-  border-radius:25px;
+  grid-template-columns: 54vw 46vw;
 }
 
-.overallBlack>.movieDetail>.movieDetails{
-  padding:4rem;
-  margin:6rem;
-  background-color:rgba(255, 217, 0, 0.473);
+.overallMovieBlack>.movieDetail>.movieDetails{
+  padding:2rem;
+  margin: 4rem 2rem;
+  max-width: 22rem;
+  background-color:rgba(255, 217, 0, 0.85);
   border:4px solid  gold;
   border-radius:25px;
 }
-.overallWhite>.movieDetail>.movieDetails{
-  padding:4rem;
-  margin:6rem;
-  background-color:#008cff7e;
+.overallMovieWhite>.movieDetail>.movieDetails{
+  padding:2rem;
+  margin:4rem 2rem;
+  width:100%;
+  max-width: 22rem;
+  background-color:rgba(0, 140, 255, 0.85);
   border:4px solid  #008cff;
   border-radius:25px;
 }
-.overallWhite>.movieDetail>.movieDetails>h2,p{
+
+.overallMovieBlack>.movieDetail>.movieDetails>iframe{
+  min-width:44vw;
+  width:100%;
+  height: 36vh;
+  border:4px solid gold;
+  border-radius:25px;
+  background-color:rgba(255, 217, 0, 0.85);
+}
+.overallMovieWhite>.movieDetail>.movieDetails>iframe{
+  min-width:44vw;
+  width:100%;
+  height: 36vh;
+  border:4px solid #008cff;
+  background-color:rgba(0, 140, 255, 0.85);
+  border-radius:25px;
+}
+.overallMovieWhite>.movieDetail>.movieDetails>h2,p{
   color:white;
 }
-.overallBlack>.movieDetail>.movieDetails>h2,p{
+.overallMovieBlack>.movieDetail>.movieDetails>h2,p{
   color:black;
 }
-.overallWhite>.movieDetail>.movieDetails>p{
+.overallMovieWhite>.movieDetail>.movieDetails>p{
   color:white;
 }
-.overallWhite>.movieDetail>.movieDetails>p>b,
-.overallWhite>.movieDetail>.movieDetails>h2>b,
-.overallWhite>.movieDetail>.movieDetails>h1{
+.overallMovieWhite>.movieDetail>.movieDetails>p>b,
+.overallMovieWhite>.movieDetail>.movieDetails>h2>b,
+.overallMovieWhite>.movieDetail>.movieDetails>h1{
   color: black;
 }
-.overallBlack>.movieDetail>.movieDetails>p>b,
-.overallBlack>.movieDetail>.movieDetails>h2>b,
-.overallBlack>.movieDetail>.movieDetails>h1{
+.overallMovieBlack>.movieDetail>.movieDetails>p>b,
+.overallMovieBlack>.movieDetail>.movieDetails>h2>b,
+.overallMovieBlack>.movieDetail>.movieDetails>h1{
   color: white;
 }
+
+.overallMovieBlack>.movieDetail>.movieReviews,
+.overallMovieWhite>.movieDetail>.movieReviews{
+  width:95%;
+  height:95%;
+  margin: 2%;
+  border-radius: 25px;
+}
+.overallMovieWhite>.movieDetail>.movieReviews{
+  border:4px solid #0088f8;
+  background: rgba(0, 136, 248,0.85);
+}
+.overallMovieBlack>.movieDetail>.movieReviews{
+  border:4px solid gold;
+  background: rgba(255, 215, 0,0.85);
+}
+.overallMovieBlack>.movieDetail>.movieReviews>.reviewHeading{
+  color:black;
+  text-align: center;
+}
+.overallMovieWhite>.movieDetail>.movieReviews>.reviewHeading{
+  color:white;
+  text-align: center;
+}
+.overallMovieWhite>.movieDetail>.movieReviews>.reviewBox{
+  height:75%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.overallMovieBlack>.movieDetail>.movieReviews>.reviewBox{
+  height:75%;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.overallMovieWhite>.movieDetail>.movieReviews>.reviewBox>.reviewCard{
+  background-color: whitesmoke;
+}
+.overallMovieBlack>.movieDetail>.movieReviews>.reviewBox>.reviewCard{
+  background-color: rgba(20, 20, 20, 0.85);
+}
+.overallMovieWhite>.movieDetail>.movieReviews>.reviewBox>.reviewCard>.reviewUserName{
+  color:#0088f8;
+  text-align:start;
+  text-transform: capitalize;
+  margin: 2%;
+}
+.overallMovieBlack>.movieDetail>.movieReviews>.reviewBox>.reviewCard>.reviewUserName{
+  color:gold;
+  text-align:start;
+  text-transform: capitalize;
+  margin: 2%;
+}
+.overallMovieWhite>.movieDetail>.movieReviews>.reviewBox>.reviewCard>.reviewText{
+  color:black;
+  text-align:start;
+  text-transform: capitalize;
+  margin-left: 8%;
+}
+.overallMovieBlack>.movieDetail>.movieReviews>.reviewBox>.reviewCard>.reviewText{
+  color:white;
+  text-align:start;
+  text-transform: capitalize;
+  margin-left: 8%;
+}
+.overallMovieWhite>.movieDetail>.movieReviews>.reviewInputBox{
+  width:100%;
+  height:13%;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px ;
+  display: grid;
+  grid-template-columns: 90% 10%;
+  align-items: center;
+}
+.overallMovieBlack>.movieDetail>.movieReviews>.reviewInputBox{
+  width:100%;
+  height:13%;
+  border-bottom-right-radius: 25px;
+  border-bottom-left-radius: 25px ;
+  display: grid;
+  grid-template-columns: 90% 10%;
+  align-items: center;
+}
+.overallMovieBlack>.movieDetail>.movieReviews>.reviewInputBox>textarea{
+  height:60%;
+  padding: 3%;
+  border-radius:25px;
+  caret-color: gold;
+  background-color: rgba(20, 20, 20,0.85);
+  color:gold;
+  font-size: large;
+  resize: none;
+}
+.overallMovieWhite>.movieDetail>.movieReviews>.reviewInputBox>textarea{
+  height:60%;
+  padding: 3%;
+  border-radius:25px;
+  caret-color:#0088f8;
+  background-color:rgba(245,245,245,0.85);
+  color:#0088f8;
+  font-size: large;
+  resize: none;
+}
+.overallMovieBlack>.movieDetail>.movieReviews>.editReview{
+  color:black;
+  background-color: gold;
+  margin: 3%;
+  border: 1px solid black;
+}
+
+.overallMovieWhite>.movieDetail>.movieReviews>.editReview{
+  color:white;
+  background-color: #0088f8;
+  margin: 3%;
+  border: 1px solid white;
+}
+
+
 
 /* TicTacToe-Game */
 

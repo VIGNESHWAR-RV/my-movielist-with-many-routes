@@ -1,20 +1,26 @@
 //import { useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useContext } from 'react';
 import Button from '@mui/material/Button';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { themeCtx } from './App';
 import {useFormik} from "formik";
+import { NavBar } from './NavBar';
 import * as yup from 'yup';
+import { API } from "./API";
+
 
 //addMovie component
 export function AddMovie() {
+
   const [theme] = useContext(themeCtx);
   const style = (theme) ? "blackAdd" : "whiteAdd";
 
 
   return (
+    <>
+    <NavBar/>
     <div className={style}>
       <div className="addMovie">
         <Box className="box" sx={{ display: 'grid', gridTemplateColumns: "1fr", gap: 0.5, padding: "0.5rem" }} autoComplete="off">
@@ -22,7 +28,8 @@ export function AddMovie() {
           <BasicForm />
         </Box>
       </div>
-    </div>);
+    </div>
+    </>);
 }
 
 const formValidationSchema = yup.object({
@@ -45,17 +52,18 @@ const formValidationSchema = yup.object({
 
 
 function BasicForm(){
-  let history = useHistory();
+  let navigate = useNavigate();
 
   const adding = (values) => {
     const newMovie = values;
-    fetch("https://61c412daf1af4a0017d99281.mockapi.io/movies",
+    const user_auth = sessionStorage.getItem("user_auth");
+    fetch(`${API}/movies`,
       {
         method: "POST",
         body: JSON.stringify(newMovie),
-        headers: { "Content-Type": "application/json" }
+        headers: { "Content-Type": "application/json",user_auth }
       })
-      .then(() => history.push(`/movies`));
+      .then(() => navigate(`/movies`));
   };
 
   const {values,handleChange,handleBlur,handleSubmit,touched,errors} = 
@@ -175,7 +183,7 @@ function BasicForm(){
       <br/>
 
       <Button className="button" type="submit" variant="contained">Add Movie</Button>
-      <Button className="cancelButton" variant="contained" color="error" onClick={() => { history.push(`/movies`); }}>Cancel</Button>
+      <Button className="cancelButton" variant="contained" color="error" onClick={() => { navigate(`/movies`); }}>Cancel</Button>
     </form>
   );
 }
