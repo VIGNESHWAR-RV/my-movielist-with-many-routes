@@ -1,1 +1,1 @@
-export const API = "http://localhost:8000";
+export const API = "https://movie-review-api-rv.herokuapp.com";
