@@ -140,7 +140,7 @@ function SignUpForm(){
   
         <input type="text" 
                required 
-               pattern='^[A-Za-z0-9.,- ]{2,}$'
+               pattern={"^[a-zA-Z0-9 ]{2,}$"}
                value={userName} 
                onChange={(e)=>setUserName(e.target.value)}
                placeholder='Create your User Name here'/>
@@ -149,7 +149,7 @@ function SignUpForm(){
   
         <input type="email" 
                required 
-               pattern='^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$' 
+               pattern={"^[a-z0-9._%+-]+@[a-z0-9.-]+.[a-z]{2,4}$"} 
                value={email}
                onChange={(e)=>setEmail(e.target.value)}
                placeholder='Enter your valid working Email '
